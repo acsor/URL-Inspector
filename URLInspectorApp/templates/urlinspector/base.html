@@ -1,0 +1,19 @@
+<html>
+
+{% load static %}
+
+<head>
+    <title>{% block title %}URL Inspector{% endblock %}</title>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="{% static 'urlinspector/style.css' %}">
+</head>
+
+<body>
+<main>
+    {% block content %}
+
+    {% endblock %}
+</main>
+</body>
+
+</html>

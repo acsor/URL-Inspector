@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class UrlinspectorappConfig(AppConfig):
+class URLInspectorAppConfig(AppConfig):
     name = 'URLInspectorApp'
