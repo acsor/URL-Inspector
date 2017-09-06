@@ -1,7 +1,11 @@
 {% extends "urlinspector/base.html" %}
 
-{% block title %}Index | {{ block.super }}{% endblock %}
-
 {% block content %}
-    <h3>If this text is visible, then Django is working!</h3>
+    <h3>Recent inspections</h3>
+
+    {% if inspections %}
+        <!-- TO-DO Implement recent inspections listing -->
+    {% else %}
+        <p>No recent inspections to display.</p>
+    {% endif %}
 {% endblock %}
