@@ -1,0 +1,3 @@
+[submodule "scrapy"]
+	path = scrapy
+	url = file:///home/none/programming/URLInspector/scrapy
