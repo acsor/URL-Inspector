@@ -1,9 +1,11 @@
 from django.conf.urls import url
 
-from URLInspectorApp.views import IndexView
+import views
+
 
 app_name = "URLInspectorApp"
 
 urlpatterns = [
-    url(r"^$", IndexView.as_view(), name="index"),
+    url(r"^$", views.IndexView.as_view(), name="index"),
+    url(r"^inspection/(?P<pk>\d+)", views.InspectionView.as_view(), name="inspection"),
 ]
