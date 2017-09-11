@@ -1,9 +1,8 @@
 from django.conf.urls import url
 
-import views
+from . import views
 
-
-app_name = "URLInspectorApp"
+app_name = "url_inspector"
 
 urlpatterns = [
     url(r"^$", views.IndexView.as_view(), name="index"),

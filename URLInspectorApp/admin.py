@@ -1,3 +1,6 @@
 from django.contrib import admin
+from URLInspectorApp.models import Extraction, URLItem
 
-# Register your models here.
+
+admin.site.register(Extraction)
+admin.site.register(URLItem)
