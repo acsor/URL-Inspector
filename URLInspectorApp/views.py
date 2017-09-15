@@ -18,6 +18,7 @@ class IndexView(ListView):
 
         return Extraction.objects.all().order_by("-start_date")[:limit]
 
+    # TO-DO Remove definitions duplication of get_context_data() method in the classes below
     def get_context_data(self, **kwargs):
         super_context = super(IndexView, self).get_context_data(**kwargs)
         context = global_context.copy()
@@ -58,3 +59,6 @@ class SavedInspectionsView(ListView):
 
         return context
 
+
+class PreNewInspectionView(TemplateView):
+    template_name = "url_inspector/pre_new_inspection.html"

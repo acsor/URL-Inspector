@@ -1,0 +1,17 @@
+{% extends "url_inspector/base.html" %}
+
+{% block title %}New inspection | {{ block.super }}{% endblock %}
+
+{% block content %}
+    <p>
+        Do you want to launch a new inspection?
+    </p>
+
+    <form method="GET" action="">
+        <label>
+            <b>URL</b>
+            <input name="scraping_url" type="url" placeholder="Web page URL to scrape">
+        </label><br>
+        <input type="submit" value="Start">
+    </form>
+{% endblock %}
