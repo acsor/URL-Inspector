@@ -1,0 +1,25 @@
+{% extends "url_inspector/base.html" %}
+
+{% block content %}
+    {% if extractions %}
+        <ol>
+            {% for e in extractions %}
+                <!-- Template copied from inspection.html -->
+                <li>
+                    <!-- TO-DO Shorten URL addresses in the middle, displaying only the start and end
+                     portions when there is not enough space -->
+                    <a
+                        href="{% url 'url_inspector:inspection' e.id %}"
+                        {% if e.url|length > length_url_max %}
+                            title="{{ e.url }}"
+                        {% endif %}
+                    >
+                        {{ e.url|truncatechars:length_url_max }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p>No page has still been examined.</p>
+    {% endif %}
+{% endblock %}

@@ -5,7 +5,11 @@
 <head>
     <title>{% block title %}URL Inspector{% endblock %}</title>
     <meta charset="UTF-8">
-    <link type="text/css" rel="stylesheet" href="{% static 'urlinspector/style.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'url_inspector/style.css' %}">
+
+    {% block head %}
+
+    {% endblock %}
 </head>
 
 <body>
@@ -13,8 +17,9 @@
 
 <nav>
     <ul>
-        <li><a href="http://nevervisited.com">Launch new inspection</a></li>
-        <li><a href="http://example.com">Saved inspections</a></li>
+        <li><a href="/">Index</a></li>
+        <li><a href="http://example.com">Launch new inspection</a></li>
+        <li><a href="{% url 'url_inspector:inspections_saved' %}">Saved inspections</a></li>
     </ul>
 </nav>
 

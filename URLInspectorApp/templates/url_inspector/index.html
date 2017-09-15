@@ -1,0 +1,24 @@
+{% extends "url_inspector/base.html" %}
+
+{% block content %}
+    <h3>Recent inspections</h3>
+
+    {% if extractions %}
+        <ul>
+            {% for e in extractions %}
+                <li>
+                    <a
+                            href="{% url 'url_inspector:inspection' e.id %}"
+                            {% if e.url|length > length_url_max %}
+                                title="{{ e.url }}"
+                            {% endif %}
+                    >
+                        {{ e.url|truncatechars:length_url_max }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recent inspections to display.</p>
+    {% endif %}
+{% endblock %}

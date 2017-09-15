@@ -1,0 +1,57 @@
+{% extends "url_inspector/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ extraction.url|truncatechars:length_url_min }} | {{ block.super }}
+{% endblock %}
+
+{% block head %}
+    <link type="text/css" rel="stylesheet" href="{% static 'url_inspector/style_inspection.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>
+        Inspection from
+        <a
+           href="{{ extraction.url }}"
+           {% if extraction.url|length > length_url_max %} title="{{ extraction.url }}" {% endif %}
+            >
+           {{ extraction.url|truncatechars:length_url_max }}
+        </a>
+    </h2>
+
+    {% if extraction.status == "started" %}
+        <p>This inspection is still progressing, please wait...</p>
+    {% elif extraction.status == "cancelled" %}
+        <p>This inspection was interrupted while running. Please rerun it to collect new data.</p>
+    {% elif extraction.status == "terminated" %}
+        {% with items=extraction.urlitem_set.all %}
+
+            {% if items %}
+                <h2>Results</h2>
+
+                <section id="inspection-results">
+                    {% for item in items %}
+                        <article>
+                            <h5 style="display: inline">{{ item.name }}</h5>
+                            <span><code>{{ item.url }}</code></span><br>
+
+                            <p>
+                                Status code: <b>{{ item.status_code }}</b><br>
+                                Full URL:
+                                <a href="{{ item.absolute_url }}"
+                                   {% if item.absolute_url|length > length_url_max %} title="{{ extraction.url }}" {% endif %}
+                                   >
+                                    {{ item.absolute_url|truncatechars:length_url_max }}
+                                </a>
+                            </p>
+                        </article>
+                    {% endfor %}
+                </section>
+            {% else %}
+                <p>No URLs were scraped in this inspection.</p>
+            {% endif %}
+
+        {% endwith %}
+    {% endif %}
+{% endblock %}

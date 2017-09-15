@@ -1,3 +1,7 @@
+body {
+	font-family: "Cantarell", "Liberation Sans";
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: #222;
 }
@@ -34,4 +38,10 @@ footer {
     border-radius: 3.5px;
     margin: 20px;
     padding: 7px;
+}
+
+code {
+    padding: 1.5px;
+    border-radius: 1.5px;
+    border: 1px solid gray;
 }

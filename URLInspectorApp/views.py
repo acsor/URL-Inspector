@@ -3,8 +3,14 @@ from django.views.generic import TemplateView, DetailView, ListView
 from .models import Extraction
 
 
+global_context = {
+    "length_url_max": 50,
+    "length_url_min": 30,
+}
+
+
 class IndexView(ListView):
-    template_name = "urlinspector/index.html"
+    template_name = "url_inspector/index.html"
     context_object_name = "extractions"
 
     def get_queryset(self):
@@ -12,6 +18,43 @@ class IndexView(ListView):
 
         return Extraction.objects.all().order_by("-start_date")[:limit]
 
+    def get_context_data(self, **kwargs):
+        super_context = super(IndexView, self).get_context_data(**kwargs)
+        context = global_context.copy()
 
-class InspectionView(TemplateView):
-    template_name = "urlinspector/inspection.html"
+        context.update(super_context)
+
+        return context
+
+
+class InspectionView(DetailView):
+    template_name = "url_inspector/inspection.html"
+    context_object_name = "extraction"
+
+    model = Extraction
+
+    def get_context_data(self, **kwargs):
+        super_context = super(InspectionView, self).get_context_data(**kwargs)
+        context = global_context.copy()
+
+        context.update(super_context)
+
+        return context
+
+
+class SavedInspectionsView(ListView):
+    # TO-DO Add ordering by various fields, like date, name or number of scraped anchors
+    template_name = "url_inspector/inspections_saved.html"
+    context_object_name = "extractions"
+
+    model = Extraction
+
+    def get_context_data(self, **kwargs):
+        super_context = super(SavedInspectionsView, self).get_context_data(**kwargs)
+        context = global_context.copy()
+
+        context.update(super_context)
+        context["length_url_max"] = 100
+
+        return context
+
