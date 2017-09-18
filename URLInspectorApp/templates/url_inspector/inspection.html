@@ -1,5 +1,6 @@
 {% extends "url_inspector/base.html" %}
 {% load static %}
+{% load ui_utils %}
 
 {% block title %}
     {{ extraction.url|truncatechars:length_url_min }} | {{ block.super }}
@@ -10,15 +11,17 @@
 {% endblock %}
 
 {% block content %}
-    <h2>
-        Inspection from
-        <a
-           href="{{ extraction.url }}"
-           {% if extraction.url|length > length_url_max %} title="{{ extraction.url }}" {% endif %}
-            >
-           {{ extraction.url|truncatechars:length_url_max }}
-        </a>
-    </h2>
+    <section id="inspection-heading">
+        <h2>
+            Inspection from
+            <a
+               href="{{ extraction.url }}"
+               {% if extraction.url|length > length_url_max %} title="{{ extraction.url }}" {% endif %}
+                >
+               {{ extraction.url|truncatechars:length_url_max }}
+            </a>
+        </h2>
+    </section>
 
     {% if extraction.status == "started" %}
         <p>This inspection is still progressing, please wait...</p>
@@ -33,15 +36,20 @@
                 <section id="inspection-results">
                     {% for item in items %}
                         <article>
-                            <h5 style="display: inline">{{ item.name }}</h5>
-                            <span><code>{{ item.url }}</code></span><br>
+                            <h5>
+                                <code>{{ item.url }}</code>
+                                {{ item.name }}
+                            </h5>
 
                             <p>
-                                <!-- TO-DO Add coloring to status codes -->
-                                Status code: <b>{{ item.status_code }}</b><br>
+                                <!-- TO-DO Add color to status codes -->
+                                Status code:
+                                <abbr title="{{ item.status_code|http_code_desc }}">
+                                    <b>{{ item.status_code }} {{ item.status_code|http_code_phrase }}</b>
+                                </abbr><br>
                                 Full URL:
                                 <a href="{{ item.absolute_url }}"
-                                   {% if item.absolute_url|length > length_url_max %} title="{{ extraction.url }}" {% endif %}
+                                   {% if item.absolute_url|length > length_url_max %} title="{{ item.absolute_url }}" {% endif %}
                                    >
                                     {{ item.absolute_url|truncatechars:length_url_max }}
                                 </a>

@@ -1,8 +1,16 @@
+section#inspection-heading {
+    color: #333;
+    background-color: #E6E8EA;
+
+    margin: 0px;
+    padding: 7px;
+}
+
 section#inspection-results > article {
     padding: 7px;
     border-top: 1px solid black;
 }
 
 section#inspection-results > article:nth-child(2n) {
-    background-color: lightyellow;
+    background-color: #FFE07A;
 }

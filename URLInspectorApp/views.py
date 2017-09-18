@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, DetailView, ListView
+from http import HTTPStatus
 
 from .models import Extraction
 

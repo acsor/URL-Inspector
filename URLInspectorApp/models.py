@@ -30,7 +30,7 @@ class Extraction(models.Model):
 
 class URLItem(models.Model):
     status_codes = [
-        (c.value, "%d %s" % (c.value, c.phrase)) for c in http.HTTPStatus
+        (c.value, c.phrase) for c in http.HTTPStatus
     ]
     str_max_length = 50
 
