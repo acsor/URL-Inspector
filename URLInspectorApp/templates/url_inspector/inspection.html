@@ -3,7 +3,7 @@
 {% load ui_utils %}
 
 {% block title %}
-    {{ extraction.url|truncatechars:length_url_min }} | {{ block.super }}
+    {{ extraction.url|truncate_chars_middle:length_url_min }} | {{ block.super }}
 {% endblock %}
 
 {% block head %}
@@ -18,7 +18,7 @@
                href="{{ extraction.url }}"
                {% if extraction.url|length > length_url_max %} title="{{ extraction.url }}" {% endif %}
                 >
-               {{ extraction.url|truncatechars:length_url_max }}
+               {{ extraction.url|truncate_chars_middle:length_url_max }}
             </a>
         </h2>
     </section>
@@ -48,10 +48,11 @@
                                     <b>{{ item.status_code }} {{ item.status_code|http_code_phrase }}</b>
                                 </abbr><br>
                                 Full URL:
-                                <a href="{{ item.absolute_url }}"
-                                   {% if item.absolute_url|length > length_url_max %} title="{{ item.absolute_url }}" {% endif %}
+                                <a
+                                    href="{{ item.absolute_url }}"
+                                    {% if item.absolute_url|length > length_url_max %} title="{{ item.absolute_url }}" {% endif %}
                                    >
-                                    {{ item.absolute_url|truncatechars:length_url_max }}
+                                    {{ item.absolute_url|truncate_chars_middle:length_url_max }}
                                 </a>
                             </p>
                         </article>
