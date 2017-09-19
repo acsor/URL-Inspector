@@ -27,6 +27,15 @@ class Extraction(models.Model):
     def __str__(self):
         return urlparse(self.url).netloc
 
+    @staticmethod
+    def urlitems_occurrences(items):
+        o = dict()
+
+        for i in items:
+            o[i.status_code] = 1 + o.get(i.status_code, 0)
+
+        return o
+
 
 class URLItem(models.Model):
     status_codes = [

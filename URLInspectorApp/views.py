@@ -40,6 +40,8 @@ class InspectionView(DetailView):
         context = global_context.copy()
 
         context.update(super_context)
+        context["items"] = context["extraction"].urlitem_set.all()
+        context["occurrences"] = Extraction.urlitems_occurrences(context["items"])
 
         return context
 
@@ -56,7 +58,6 @@ class SavedInspectionsView(ListView):
         context = global_context.copy()
 
         context.update(super_context)
-        context["length_url_max"] = 100
 
         return context
 

@@ -1,5 +1,7 @@
 {% extends "url_inspector/base.html" %}
 
+{% load ui_utils %}
+
 {% block content %}
     <h3>Recent inspections</h3>
 
@@ -9,11 +11,9 @@
                 <li>
                     <a
                             href="{% url 'url_inspector:inspection' e.id %}"
-                            {% if e.url|length > length_url_max %}
-                                title="{{ e.url }}"
-                            {% endif %}
+                            {% if e.url|length > length_url_max %} title="{{ e.url }}" {% endif %}
                     >
-                        {{ e.url|truncatechars:length_url_max }}
+                        {{ e.url|truncate_chars_middle:length_url_max }}
                     </a>
                 </li>
             {% endfor %}

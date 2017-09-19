@@ -3,7 +3,11 @@ section#inspection-heading {
     background-color: #E6E8EA;
 
     margin: 0px;
-    padding: 7px;
+    padding: 10px;
+}
+
+section#inspection-heading > h2 {
+    font-size: 130%;
 }
 
 section#inspection-results > article {
@@ -12,5 +16,19 @@ section#inspection-results > article {
 }
 
 section#inspection-results > article:nth-child(2n) {
-    background-color: #FFE07A;
+    background-color: #FFEAA6;
+}
+
+div.tiles {
+    margin: inherit;
+    padding: inherit;
+}
+
+div.tiles > span {
+    color: #EFEFEF;
+    background-color: #565656;
+
+    border: 1px solid black;
+    padding: 2.5px;
+    margin: 4px;
 }

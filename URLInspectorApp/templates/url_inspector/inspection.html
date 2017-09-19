@@ -1,4 +1,5 @@
 {% extends "url_inspector/base.html" %}
+
 {% load static %}
 {% load ui_utils %}
 
@@ -16,11 +17,26 @@
             Inspection from
             <a
                href="{{ extraction.url }}"
+               style="font-weight: normal"
                {% if extraction.url|length > length_url_max %} title="{{ extraction.url }}" {% endif %}
                 >
                {{ extraction.url|truncate_chars_middle:length_url_max }}
             </a>
         </h2>
+
+        {% if extraction.status == "terminated" %}
+            {% if items %}
+                <div class="tiles">
+                    {% for code, occurrence in occurrences.items|dictsortreversed:1 %}
+                        <span>
+                            <b>{{ code }} {{ code|http_code_phrase }}</b>
+                            × {{ occurrence }}
+                        </span>
+                    {% endfor %}
+                    <span><b>Total</b> {{ items|length }}</span>
+                </div>
+            {% endif %}
+        {% endif %}
     </section>
 
     {% if extraction.status == "started" %}
@@ -28,40 +44,36 @@
     {% elif extraction.status == "cancelled" %}
         <p>This inspection was interrupted while running. Please rerun it to collect new data.</p>
     {% elif extraction.status == "terminated" %}
-        {% with items=extraction.urlitem_set.all %}
+        {% if items %}
+            <h3>Results</h3>
 
-            {% if items %}
-                <h2>Results</h2>
+            <section id="inspection-results">
+                {% for item in items %}
+                    <article>
+                        <h5>
+                            <code>{{ item.url }}</code>
+                            {{ item.name }}
+                        </h5>
 
-                <section id="inspection-results">
-                    {% for item in items %}
-                        <article>
-                            <h5>
-                                <code>{{ item.url }}</code>
-                                {{ item.name }}
-                            </h5>
-
-                            <p>
-                                <!-- TO-DO Add color to status codes -->
-                                Status code:
-                                <abbr title="{{ item.status_code|http_code_desc }}">
-                                    <b>{{ item.status_code }} {{ item.status_code|http_code_phrase }}</b>
-                                </abbr><br>
-                                Full URL:
-                                <a
-                                    href="{{ item.absolute_url }}"
-                                    {% if item.absolute_url|length > length_url_max %} title="{{ item.absolute_url }}" {% endif %}
-                                   >
-                                    {{ item.absolute_url|truncate_chars_middle:length_url_max }}
-                                </a>
-                            </p>
-                        </article>
-                    {% endfor %}
-                </section>
-            {% else %}
-                <p>No URLs were scraped in this inspection.</p>
-            {% endif %}
-
-        {% endwith %}
+                        <p>
+                            <!-- TO-DO Add color to status codes -->
+                            Status code:
+                            <abbr title="{{ item.status_code|http_code_desc }}">
+                                <b>{{ item.status_code }} {{ item.status_code|http_code_phrase }}</b>
+                            </abbr><br>
+                            Full URL:
+                            <a
+                                href="{{ item.absolute_url }}"
+                                {% if item.absolute_url|length > length_url_max %} title="{{ item.absolute_url }}" {% endif %}
+                               >
+                                {{ item.absolute_url|truncate_chars_middle:length_url_max }}
+                            </a>
+                        </p>
+                    </article>
+                {% endfor %}
+            </section>
+        {% else %}
+            <p>No URLs were scraped in this inspection.</p>
+        {% endif %}
     {% endif %}
 {% endblock %}
