@@ -7,7 +7,7 @@
         Do you want to launch a new inspection?
     </p>
 
-    <form method="GET" action="">
+    <form method="GET" action="{% url 'url_inspector:inspection_new' %}">
         <label>
             <b>URL</b>
             <input name="scraping_url" type="url" placeholder="Web page URL to scrape">

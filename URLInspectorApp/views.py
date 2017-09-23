@@ -1,8 +1,10 @@
+from django.http import HttpRequest, HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic import TemplateView, DetailView, ListView
-from http import HTTPStatus
+from scrapyd_api import ScrapydAPI
 
 from .models import Extraction
-
+from .settings import conf_scrapyd
 
 global_context = {
     "length_url_max": 50,
@@ -19,7 +21,7 @@ class IndexView(ListView):
 
         return Extraction.objects.all().order_by("-start_date")[:limit]
 
-    # TO-DO Remove definitions duplication of get_context_data() method in the classes below
+    # TO-DO Remove definition duplicates of the get_context_data() method in the classes below
     def get_context_data(self, **kwargs):
         super_context = super(IndexView, self).get_context_data(**kwargs)
         context = global_context.copy()
@@ -64,3 +66,36 @@ class SavedInspectionsView(ListView):
 
 class PreNewInspectionView(TemplateView):
     template_name = "url_inspector/pre_new_inspection.html"
+
+
+def inspection_new(request: HttpRequest):
+    url, extraction = None, None
+    form_url = "scraping_url"
+    scrapyc = ScrapydAPI(
+        conf_scrapyd["target"]
+    )
+
+    if form_url not in request.GET:
+        # Implement proper handling
+        pass
+    else:
+        url = request.GET[form_url]
+        extraction = Extraction(url=url)
+
+        extraction.save()
+
+        try:
+            scrapyc.schedule(
+                conf_scrapyd["project"],
+                conf_scrapyd["spider"],
+                urls=url,
+                django_urls=(url,),
+                django_ids=(extraction.id,)
+            )
+        # TO-DO Catch possible exceptions here
+        finally:
+            pass
+
+    return HttpResponseRedirect(
+        reverse("url_inspector:inspection", kwargs={"pk": extraction.id})
+    )
