@@ -9,6 +9,7 @@ from .settings import conf_scrapyd
 global_context = {
     "length_url_max": 50,
     "length_url_min": 30,
+    "inspection_refresh": 7,    # Seconds to wait before an incomplete inspection's page is refreshed
 }
 
 
@@ -76,7 +77,7 @@ def inspection_new(request: HttpRequest):
     )
 
     if form_url not in request.GET:
-        # Implement proper handling
+        # TO-DO Implement proper handling
         pass
     else:
         url = request.GET[form_url]

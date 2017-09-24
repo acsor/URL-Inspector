@@ -9,12 +9,18 @@
 
 {% block head %}
     <link type="text/css" rel="stylesheet" href="{% static 'url_inspector/style_inspection.css' %}">
+
+    {% if extraction.status == "started" %}
+        <meta http-equiv="refresh" content="{{ inspection_refresh }}">
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     <section id="inspection-heading">
         <h2>
             Inspection from
+            <!-- TO-DO Create a custom template filter for creating anchors like the one below and set the target
+            attribute to a new window -->
             <a
                href="{{ extraction.url }}"
                style="font-weight: normal"
@@ -40,7 +46,10 @@
     </section>
 
     {% if extraction.status == "started" %}
-        <p>This inspection is still progressing, please wait...</p>
+        <p>
+            This page will <b>reload every {{ inspection_refresh }} seconds</b> until the results are complete.<br>
+            Please be patient and wait.
+        </p>
     {% elif extraction.status == "cancelled" %}
         <p>This inspection was interrupted while running. Please rerun it to collect new data.</p>
     {% elif extraction.status == "terminated" %}
