@@ -5,8 +5,7 @@
 {% block content %}
     {% if extractions %}
         <ol>
-            {% for e in extractions %}
-                <!-- Template copied from inspection.html -->
+            {% for e in extractions|dictsortreversed:"start_date" %}
                 <li>
                     <a
                         href="{% url 'url_inspector:inspection' e.id %}"

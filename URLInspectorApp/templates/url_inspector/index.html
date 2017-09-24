@@ -17,6 +17,12 @@
                     </a>
                 </li>
             {% endfor %}
+
+            {% if extractions|length < extractions_count %}
+                <li>
+                    <a href="{% url 'url_inspector:inspections_saved' %}">See more...</a>
+                </li>
+            {% endif %}
         </ul>
     {% else %}
         <p>No recent inspections to display.</p>

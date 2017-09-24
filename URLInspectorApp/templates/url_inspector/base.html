@@ -6,7 +6,7 @@
     <title>{% block title %}URL Inspector{% endblock %}</title>
 
     <meta charset="UTF-8">
-    <meta name="keywords" content="scraping,urls">
+    <meta name="keywords" content="scraping,crawling,url,urls">
     <meta name="description" content="Web utility to report link status on webpages.">
 
     <link type="text/css" rel="stylesheet" href="{% static 'url_inspector/style.css' %}">
@@ -20,6 +20,7 @@
 <h1 id="base-title">URL Inspector</h1>
 
 <nav>
+    <!-- TO-DO Add contextual highlight to the menu items below when their pages are visited. -->
     <ul>
         <li><a href="/">Index</a></li>
         <li><a href="{% url 'url_inspector:inspection_pre_new' %}">Launch new inspection</a></li>

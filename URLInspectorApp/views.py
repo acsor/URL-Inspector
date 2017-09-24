@@ -28,6 +28,7 @@ class IndexView(ListView):
         context = global_context.copy()
 
         context.update(super_context)
+        context["extractions_count"] = Extraction.objects.count()
 
         return context
 
