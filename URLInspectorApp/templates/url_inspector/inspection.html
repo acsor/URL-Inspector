@@ -50,6 +50,9 @@
             This page will <b>reload every {{ inspection_refresh }} seconds</b> until the results are complete.<br>
             Please be patient and wait.
         </p>
+
+        <!-- TO-DO Improve the use of this tag by studying it, choosing a more suited icon etc. -->
+        <img src="{% static 'url_inspector/loading.gif' %}" width='36px' height='36px'>
     {% elif extraction.status == "cancelled" %}
         <p>This inspection was interrupted while running. Please rerun it to collect new data.</p>
     {% elif extraction.status == "terminated" %}

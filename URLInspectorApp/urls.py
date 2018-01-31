@@ -4,7 +4,7 @@ from . import views
 
 app_name = "url_inspector"
 
-# TO-DO Add eliminate inspection feature
+# TO-DO Add "eliminate inspection" feature
 urlpatterns = [
     url(r"^$", views.IndexView.as_view(), name="index"),
     url(r"^inspection/(?P<pk>\d+)", views.InspectionView.as_view(), name="inspection"),
