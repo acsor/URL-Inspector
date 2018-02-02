@@ -1,6 +1,20 @@
 {% extends "url_inspector/base.html" %}
 
+{% load static %}
 {% load ui_utils %}
+
+{% block head %}
+    <style>
+        a:hover > .button-delete {
+            filter: opacity(100%);
+        }
+
+        .button-delete {
+            margin-left: 3px;
+            filter: opacity(70%);
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
     {% if extractions %}
@@ -14,6 +28,18 @@
                         {% endif %}
                     >
                         {{ e.url|truncate_chars_middle:length_url_max }}
+                    </a>
+
+                    <a
+                            href="{% url 'url_inspector:inspection_delete' e.id %}"
+                            title="Delete"
+                    >
+                        <img
+                                src="{% static 'url_inspector/red_cross.png' %}"
+                                alt="X"
+                                width='11px' height='11px'
+                                class="button-delete"
+                        >
                     </a>
                 </li>
             {% endfor %}

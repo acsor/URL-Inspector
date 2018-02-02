@@ -1,6 +1,6 @@
 from django.http import HttpRequest, HttpResponseRedirect
-from django.urls import reverse
-from django.views.generic import TemplateView, DetailView, ListView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, DetailView, ListView, DeleteView
 from scrapyd_api import ScrapydAPI
 
 from .models import Extraction
@@ -12,9 +12,11 @@ global_context = {
     "inspection_refresh": 7,    # Seconds to wait before an incomplete inspection's page is refreshed
 }
 
+template_root = "url_inspector"
+
 
 class IndexView(ListView):
-    template_name = "url_inspector/index.html"
+    template_name = template_root + "/index.html"
     context_object_name = "extractions"
 
     def get_queryset(self):
@@ -34,7 +36,7 @@ class IndexView(ListView):
 
 
 class InspectionView(DetailView):
-    template_name = "url_inspector/inspection.html"
+    template_name = template_root + "/inspection.html"
     context_object_name = "extraction"
 
     model = Extraction
@@ -52,7 +54,7 @@ class InspectionView(DetailView):
 
 class SavedInspectionsView(ListView):
     # TO-DO Add ordering by various fields, like date, name or number of scraped anchors
-    template_name = "url_inspector/inspections_saved.html"
+    template_name = template_root + "/inspections_saved.html"
     context_object_name = "extractions"
 
     model = Extraction
@@ -67,7 +69,7 @@ class SavedInspectionsView(ListView):
 
 
 class PreNewInspectionView(TemplateView):
-    template_name = "url_inspector/pre_new_inspection.html"
+    template_name = template_root + "/pre_new_inspection.html"
 
 
 def inspection_new(request: HttpRequest):
@@ -101,3 +103,11 @@ def inspection_new(request: HttpRequest):
     return HttpResponseRedirect(
         reverse("url_inspector:inspection", kwargs={"pk": extraction.id})
     )
+
+
+class InspectionDelete(DeleteView):
+    model = Extraction
+    context_object_name = "extraction"
+    template_name = template_root + "/inspection_confirm_delete.html"
+
+    success_url = reverse_lazy("url_inspector:inspections_saved")

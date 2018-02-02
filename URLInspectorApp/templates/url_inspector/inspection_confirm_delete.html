@@ -1,0 +1,14 @@
+{% extends "url_inspector/base.html" %}
+
+{% block title %}
+    Confirm deleting {{ object }}? | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <p>Do you really want to delete <code>{{ extraction }}</code>?</p>
+
+        <input type="submit" value="Delete">
+    </form>
+{% endblock %}

@@ -43,8 +43,8 @@ def http_code_description(code):
 @stringfilter
 def truncate_chars_middle(text, limit, sep="..."):
     """
-    Truncates a given string **text** in the middle, so that **text** has length **limit** if it exceeds the number of
-    characters, or else **len(text)** if it doesn't.
+    Truncates a given string **text** in the middle, so that **text** has length **limit** if the number of characters
+    is exceeded, or else **len(text)** if it isn't.
     Since this is a template filter, no exceptions are raised when they would normally do.
 
     :param text: the text to truncate.
