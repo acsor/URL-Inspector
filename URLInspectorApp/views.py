@@ -111,3 +111,12 @@ class InspectionDelete(DeleteView):
     template_name = template_root + "/inspection_confirm_delete.html"
 
     success_url = reverse_lazy("url_inspector:inspections_saved")
+
+    def get_context_data(self, **kwargs):
+        super_context = super(InspectionDelete, self).get_context_data(**kwargs)
+        context = global_context.copy()
+
+        context.update(super_context)
+
+        return context
+
