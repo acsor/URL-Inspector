@@ -18,6 +18,12 @@
 {% block content %}
     <section id="inspection-heading">
         <h2>
+            <img
+                width="16px" height="16px"
+                {% with suffix=extraction.status|add:'.png' %}
+                    src="{% static 'url_inspector/status_'|add:suffix %}"
+                {% endwith %}
+            >
             Inspection from
             <!-- TO-DO Create a custom template filter for creating anchors like the one below and set the target
             attribute to a new window -->
@@ -43,6 +49,10 @@
                 </div>
             {% endif %}
         {% endif %}
+
+        <footer>
+            Started on {{ extraction.start_date|date:"SHORT_DATETIME_FORMAT" }}.
+        </footer>
     </section>
 
     {% if extraction.status == "started" %}

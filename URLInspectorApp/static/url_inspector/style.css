@@ -76,7 +76,7 @@ code {
     border: 1px solid gray;
 }
 
-footer {
+body > footer {
     color: #EEE;
     background-color: darkblue;
 

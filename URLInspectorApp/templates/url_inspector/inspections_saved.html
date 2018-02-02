@@ -12,11 +12,12 @@
 
         a:hover > .button-delete {
             filter: opacity(100%);
+            filter: brightness(80%);
         }
 
         .button-delete {
             margin-left: 3px;
-            filter: opacity(70%);
+            filter: opacity(65%);
         }
     </style>
 {% endblock %}
@@ -27,9 +28,9 @@
             {% for e in extractions|dictsortreversed:"start_date" %}
                 <li>
                     <img
-                            {% with suffix=e.status|add:'.png' %}
-                                src="{% static 'url_inspector/status_'|add:suffix %}"
-                            {% endwith %}
+                        {% with suffix=e.status|add:'.png' %}
+                            src="{% static 'url_inspector/status_'|add:suffix %}"
+                        {% endwith %}
                     >
 
                     <a
@@ -42,13 +43,13 @@
                     </a>
 
                     <a
-                            href="{% url 'url_inspector:inspection_delete' e.id %}"
-                            title="Delete"
+                        href="{% url 'url_inspector:inspection_delete' e.id %}"
+                        title="Delete"
                     >
                         <img
-                                src="{% static 'url_inspector/red_cross.png' %}"
-                                alt="X"
-                                class="button-delete"
+                            src="{% static 'url_inspector/red_cross.png' %}"
+                            alt="X"
+                            class="button-delete"
                         >
                     </a>
                 </li>

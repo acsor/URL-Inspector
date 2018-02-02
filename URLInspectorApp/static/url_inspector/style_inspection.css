@@ -10,6 +10,11 @@ section#inspection-heading > h2 {
     font-size: 130%;
 }
 
+section#inspection-heading > footer {
+    font-size: 85%;
+    margin: 5px;
+}
+
 section#inspection-results > article {
     padding: 7px;
     border-top: 1px solid black;
