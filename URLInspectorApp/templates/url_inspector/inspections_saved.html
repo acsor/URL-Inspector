@@ -5,6 +5,11 @@
 
 {% block head %}
     <style>
+        li img {
+            width: 11px;
+            height: 11px;
+        }
+
         a:hover > .button-delete {
             filter: opacity(100%);
         }
@@ -21,6 +26,12 @@
         <ol>
             {% for e in extractions|dictsortreversed:"start_date" %}
                 <li>
+                    <img
+                            {% with suffix=e.status|add:'.png' %}
+                                src="{% static 'url_inspector/status_'|add:suffix %}"
+                            {% endwith %}
+                    >
+
                     <a
                         href="{% url 'url_inspector:inspection' e.id %}"
                         {% if e.url|length > length_url_max %}
@@ -37,7 +48,6 @@
                         <img
                                 src="{% static 'url_inspector/red_cross.png' %}"
                                 alt="X"
-                                width='11px' height='11px'
                                 class="button-delete"
                         >
                     </a>
