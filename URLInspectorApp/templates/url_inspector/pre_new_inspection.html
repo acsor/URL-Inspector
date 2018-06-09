@@ -10,7 +10,8 @@
     <form method="GET" action="{% url 'url_inspector:inspection_new' %}">
         <label>
             <b>URL</b>
-            <input name="scraping_url" type="url" placeholder="Web page URL to scrape">
+            <input name="scraping_url" type="url" placeholder="Web page URL to scrape"
+                   autofocus required>
         </label><br>
         <input type="submit" value="Start">
     </form>

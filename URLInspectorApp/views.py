@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView, ListView, DeleteView
@@ -52,6 +54,7 @@ class PreNewInspectionView(TemplateView):
 
 
 def inspection_new(request: HttpRequest):
+    # TO-DO Use Django's form validation
     url, extraction = None, None
     form_url = "scraping_url"
     scrapyc = ScrapydAPI(
@@ -59,10 +62,19 @@ def inspection_new(request: HttpRequest):
     )
 
     if form_url not in request.GET:
-        # TO-DO Implement proper handling
-        pass
+        return HttpResponseRedirect(
+            reverse("url_inspector:error_new_inspection")
+        )
     else:
         url = request.GET[form_url]
+
+        try:
+            URLValidator()(url)
+        except ValidationError:
+            return HttpResponseRedirect(
+                reverse("url_inspector:error_new_inspection")
+            )
+
         extraction = Extraction(url=url)
 
         extraction.save()
@@ -75,16 +87,21 @@ def inspection_new(request: HttpRequest):
                 django_urls=(url,),
                 django_ids=(extraction.id,)
             )
-        # TO-DO Catch possible exceptions here
-        finally:
-            pass
+        except Exception as e:
+            return HttpResponseRedirect(
+                reverse("url_inspector:error_new_inspection")
+            )
 
     return HttpResponseRedirect(
         reverse("url_inspector:inspection", kwargs={"pk": extraction.id})
     )
 
 
-class InspectionDelete(DeleteView, GlobalContextMixin):
+class ErrorNewInspection(TemplateView):
+    template_name = template_root + "/error_new_inspection.html"
+
+
+class InspectionDelete(DeleteView):
     model = Extraction
     context_object_name = "extraction"
     template_name = template_root + "/inspection_confirm_delete.html"

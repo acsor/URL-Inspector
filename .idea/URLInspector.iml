@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/scrapy/URLInspectorScraper" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/URLInspectorApp" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/previews" />
       <excludeFolder url="file://$MODULE_DIR$/scrapy/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/scrapy/URLInspectorScraper/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/scrapy/build" />
@@ -18,7 +19,7 @@
       <excludePattern pattern="*.pid" />
       <excludePattern pattern="setup.py" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.6.2rc1 (/usr/bin/python3.6)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">
