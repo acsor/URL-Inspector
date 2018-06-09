@@ -35,11 +35,11 @@
 
                     <a
                         href="{% url 'url_inspector:inspection' e.id %}"
-                        {% if e.url|length > length_url_max %}
+                        {% if e.url|length > global.length_url_max %}
                             title="{{ e.url }}"
                         {% endif %}
                     >
-                        {{ e.url|truncate_chars_middle:length_url_max }}
+                        {{ e.url|truncate_chars_middle:global.length_url_max }}
                     </a>
 
                     <a

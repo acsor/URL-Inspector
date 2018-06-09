@@ -11,7 +11,7 @@
         {% csrf_token %}
         <p>
             Do you really want to delete
-            <code>{{ extraction.url|truncate_chars_middle:length_url_min }}</code>?
+            <code>{{ extraction.url|truncate_chars_middle:global.length_url_min }}</code>?
         </p>
 
         <input type="submit" value="Delete">

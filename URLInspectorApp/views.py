@@ -1,7 +1,6 @@
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, DetailView, ListView, DeleteView
-from django.views.generic.base import ContextMixin
 from scrapyd_api import ScrapydAPI
 
 from .models import Extraction
@@ -10,27 +9,7 @@ from .settings import conf_scrapyd
 template_root = "url_inspector"
 
 
-class GlobalContextMixin(ContextMixin):
-    """
-    Class used to provide a common root context for class-based views.
-    """
-
-    global_context = {
-        "length_url_max": 50,
-        "length_url_min": 30,
-        "inspection_refresh": 7,    # Seconds to wait before an incomplete inspection's page is refreshed
-    }
-
-    def get_context_data(self, **kwargs):
-        super_context = super(GlobalContextMixin, self).get_context_data(**kwargs)
-        context = self.global_context.copy()
-
-        context.update(super_context)
-
-        return context
-
-
-class IndexView(ListView, GlobalContextMixin):
+class IndexView(ListView):
     template_name = template_root + "/index.html"
     context_object_name = "extractions"
 
@@ -40,13 +19,13 @@ class IndexView(ListView, GlobalContextMixin):
         return Extraction.objects.all().order_by("-start_date")[:limit]
 
     def get_context_data(self, **kwargs):
-        super_context = super(IndexView, self).get_context_data(**kwargs)
-        super_context["extractions_count"] = Extraction.objects.count()
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context["extractions_count"] = Extraction.objects.count()
 
-        return super_context
+        return context
 
 
-class InspectionView(DetailView, GlobalContextMixin):
+class InspectionView(DetailView):
     template_name = template_root + "/inspection.html"
     context_object_name = "extraction"
 
@@ -60,7 +39,7 @@ class InspectionView(DetailView, GlobalContextMixin):
         return super_context
 
 
-class SavedInspectionsView(ListView, GlobalContextMixin):
+class SavedInspectionsView(ListView):
     # TO-DO Add ordering by various fields, like date, name or number of scraped anchors
     template_name = template_root + "/inspections_saved.html"
     context_object_name = "extractions"
