@@ -11,7 +11,7 @@
     <link type="text/css" rel="stylesheet" href="{% static 'url_inspector/style_inspection.css' %}">
 
     {% if extraction.status == "started" %}
-        <meta http-equiv="refresh" content="{{ inspection_refresh }}">
+        <meta http-equiv="refresh" content="{{ global.inspection_refresh }}">
     {% endif %}
 {% endblock %}
 
@@ -57,7 +57,7 @@
 
     {% if extraction.status == "started" %}
         <p>
-            This page will <b>reload every {{ inspection_refresh }} seconds</b> until the results are complete.<br>
+            This page will <b>reload every {{ global.inspection_refresh }} seconds</b> until the results are complete.<br>
             Please be patient and wait.
         </p>
 
@@ -77,10 +77,14 @@
                         </h5>
 
                         <p>
-                            <!-- TO-DO Add color to status codes -->
                             Status code:
                             <abbr title="{{ item.status_code|http_code_desc }}">
-                                <b>{{ item.status_code }} {{ item.status_code|http_code_phrase }}</b>
+                                <b>
+                                    <span style="color: {{ item.status_code|http_code_color }}">
+                                        {{ item.status_code }}
+                                    </span>
+                                    {{ item.status_code|http_code_phrase }}
+                                </b>
                             </abbr><br>
                             Full URL:
                             <a

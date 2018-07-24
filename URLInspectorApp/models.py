@@ -47,7 +47,6 @@ class URLItem(models.Model):
     name = models.CharField(max_length=256)
     url = models.URLField()
     absolute_url = models.URLField()
-    # TO-DO Handle missing HTTP status codes
     status_code = models.PositiveSmallIntegerField(choices=status_codes)
 
     def __str__(self):

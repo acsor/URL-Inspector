@@ -7,6 +7,14 @@ from django.template.defaultfilters import stringfilter
 register = template.Library()
 
 
+_codes_to_colors = {
+    1: "gray",
+    2: "green",
+    3: "blue",
+    4: "orange",
+    5: "red"
+}
+
 @register.filter()
 @stringfilter
 def http_code_phrase(code):
@@ -21,6 +29,18 @@ def http_code_phrase(code):
             pass
 
     return ""
+
+
+@register.filter()
+@stringfilter
+def http_code_color(code):
+    """
+    :param code: an HTTP status code (e.g. 200, 403, 404, ...).
+    :return: a text such as <span color="...">code</code>, embedding the color
+        of the status code.
+    """
+    if code.isdigit():
+        return _codes_to_colors[int(code[0])]
 
 
 @register.filter("http_code_desc")
