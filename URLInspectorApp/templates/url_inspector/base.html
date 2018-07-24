@@ -13,6 +13,12 @@
 
     <link type="text/css" rel="stylesheet" href="{% static 'url_inspector/style.css' %}">
 
+    <style>
+        body > nav li > a[href*="{{ request.path }}"] {
+            text-decoration: underline;
+        }
+    </style>
+
     {% block head %}
 
     {% endblock %}
@@ -22,9 +28,8 @@
 <h1 id="base-title">URL Inspector</h1>
 
 <nav>
-    <!-- TO-DO Add contextual highlight to the menu items below when their pages are visited. -->
     <ul>
-        <li><a href="/">Index</a></li>
+        <li><a href="{% url 'url_inspector:index' %}">Index</a></li>
         <li><a href="{% url 'url_inspector:inspection_pre_new' %}">Launch new inspection</a></li>
         <li><a href="{% url 'url_inspector:inspections_saved' %}">Saved inspections</a></li>
     </ul>
