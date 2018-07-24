@@ -1,0 +1,11 @@
+#!/bin/bash
+
+## Sets up and runs the URL Inspector server(s)
+
+export PYTHONBUFFERED=1
+
+python3 ./manage.py runserver &
+
+pushd ./scrapy
+scrapyd -l - &
+popd
