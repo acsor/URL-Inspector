@@ -24,8 +24,27 @@
 
 {% block content %}
     {% if extractions %}
+        <form method="GET" action="{% url 'url_inspector:inspections_saved' %}">
+            <label style="float: right">
+                Sort by:
+                <select name="order_by" onchange="this.form.submit()">
+                    {% for value, name in sort_options %}
+                        <option
+                                value="{{ value }}"
+
+                                {% if value == request.GET.order_by %}
+                                    selected
+                                {% endif %}
+                        >
+                            {{ name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+        </form>
+
         <ol>
-            {% for e in extractions|dictsortreversed:"start_date" %}
+            {% for e in extractions %}
                 <li>
                     <img
                         {% with suffix=e.status|add:'.png' %}
